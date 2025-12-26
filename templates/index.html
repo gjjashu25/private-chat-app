@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Private Chat</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="join-box">
+    <h3>Join Private Chat</h3>
+    <input id="username" placeholder="Your name">
+    <input id="room" placeholder="Room code">
+    <button onclick="joinChat()">Join</button>
+</div>
+
+<div class="chat-box hidden">
+    <div id="messages"></div>
+    <div class="input-area">
+        <input id="msg" placeholder="Type message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="/static/script.js"></script>
+
+</body>
+</html>
