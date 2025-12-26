@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+}
+
+.join-box, .chat-box {
+    width: 320px;
+    margin: 100px auto;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.join-box h3 {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#messages {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.my-message {
+    text-align: right;
+    color: blue;
+    margin: 5px;
+}
+
+.other-message {
+    text-align: left;
+    color: green;
+    margin: 5px;
+}
+
+.input-area {
+    display: flex;
+}
+
+input {
+    flex: 1;
+    padding: 5px;
+}
+
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
