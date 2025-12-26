@@ -1,19 +1,66 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f0f2f5;
+* {
+    box-sizing: border-box;
 }
 
-.join-box, .chat-box {
-    width: 320px;
-    margin: 100px auto;
-    padding: 15px;
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Join screen */
+.join-box {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 340px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    animation: fadeIn 0.6s ease;
 }
 
 .join-box h3 {
-    text-align: center;
+    margin-bottom: 20px;
+}
+
+.join-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.join-box button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    background: #667eea;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.join-box button:hover {
+    background: #5a67d8;
+}
+
+/* Chat screen */
+.chat-box {
+    width: 380px;
+    height: 500px;
+    background: white;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    animation: fadeIn 0.6s ease;
 }
 
 .hidden {
@@ -21,35 +68,72 @@ body {
 }
 
 #messages {
-    height: 250px;
+    flex: 1;
+    padding: 15px;
     overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
+    background: #f7f7f7;
 }
 
+/* Chat bubbles */
 .my-message {
-    text-align: right;
-    color: blue;
-    margin: 5px;
+    max-width: 70%;
+    margin-left: auto;
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    background: #667eea;
+    color: white;
+    border-radius: 16px 16px 0 16px;
+    font-size: 14px;
 }
 
 .other-message {
-    text-align: left;
-    color: green;
-    margin: 5px;
+    max-width: 70%;
+    margin-right: auto;
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    background: #e4e6eb;
+    color: black;
+    border-radius: 16px 16px 16px 0;
+    font-size: 14px;
 }
 
+/* Input area */
 .input-area {
     display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
 }
 
-input {
+.input-area input {
     flex: 1;
-    padding: 5px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
 }
 
-button {
-    padding: 5px 10px;
+.input-area button {
+    margin-left: 8px;
+    padding: 10px 16px;
+    border-radius: 50%;
+    border: none;
+    background: #667eea;
+    color: white;
     cursor: pointer;
+}
+
+.input-area button:hover {
+    background: #5a67d8;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
