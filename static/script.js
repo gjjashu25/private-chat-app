@@ -42,3 +42,14 @@ document.getElementById("msg").addEventListener("keypress", function(e) {
         sendMessage();
     }
 });
+let typingTimeout;
+
+document.getElementById("msg").addEventListener("input", () => {
+    socket.emit("typing", { username, room });
+
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(() => {
+        document.getElementById("typing-status").innerText = "";
+    }, 1000);
+});
+
