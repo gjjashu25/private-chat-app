@@ -1,62 +1,97 @@
 const socket = io();
 let room = "";
 let username = "";
+let typingTimeout = null;
 
-function joinChat() {
-    username = document.getElementById("username").value;
-    room = document.getElementById("room").value;
+document.addEventListener("DOMContentLoaded", () => {
 
-    if (!username || !room) return;
+    const msgInput = document.getElementById("msg");
+    const typingStatus = document.getElementById("typing-status");
+    const toggleBtn = document.getElementById("toggleTheme");
 
-    socket.emit("join", { username, room });
+    // ------------------------
+    // JOIN CHAT
+    // ------------------------
+    window.joinChat = function () {
+        username = document.getElementById("username").value;
+        room = document.getElementById("room").value;
 
-    document.querySelector(".join-box").classList.add("hidden");
-    document.querySelector(".chat-box").classList.remove("hidden");
-}
+        if (!username || !room) return;
 
-socket.on("message", function(msg) {
-    const div = document.createElement("div");
+        socket.emit("join", { username, room });
 
-    if (msg.startsWith(username + ":")) {
-        div.className = "my-message";
-    } else {
-        div.className = "other-message";
+        document.querySelector(".join-box").classList.add("hidden");
+        document.querySelector(".chat-box").classList.remove("hidden");
+    };
+
+    // ------------------------
+    // RECEIVE MESSAGE
+    // ------------------------
+    socket.on("message", (msg) => {
+        const div = document.createElement("div");
+
+        if (msg.startsWith(username + ":")) {
+            div.className = "my-message";
+        } else {
+            div.className = "other-message";
+        }
+
+        div.innerText = msg;
+        document.getElementById("messages").appendChild(div);
+        document.getElementById("messages").scrollTop =
+            document.getElementById("messages").scrollHeight;
+    });
+
+    // ------------------------
+    // SEND MESSAGE
+    // ------------------------
+    window.sendMessage = function () {
+        const message = msgInput.value;
+        if (message.trim() === "") return;
+
+        socket.emit("message", { username, room, message });
+        msgInput.value = "";
+        typingStatus.innerText = "";
+    };
+
+    msgInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendMessage();
+    });
+
+    // ------------------------
+    // TYPING INDICATOR (THROTTLED)
+    // ------------------------
+    msgInput.addEventListener("input", () => {
+        if (!typingTimeout) {
+            socket.emit("typing", { username, room });
+        }
+
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            typingTimeout = null;
+            typingStatus.innerText = "";
+        }, 1000);
+    });
+
+    socket.on("typing", (msg) => {
+        typingStatus.innerText = msg;
+
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            typingStatus.innerText = "";
+        }, 1000);
+    });
+
+    // ------------------------
+    // DARK MODE (FIXED)
+    // ------------------------
+    if (toggleBtn) {
+        toggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+
+            toggleBtn.textContent =
+                document.body.classList.contains("dark") ? "☀️" : "🌙";
+        });
     }
 
-    div.innerText = msg;
-    document.getElementById("messages").appendChild(div);
-    document.getElementById("messages").scrollTop =
-        document.getElementById("messages").scrollHeight;
 });
-
-function sendMessage() {
-    const message = document.getElementById("msg").value;
-    if (message.trim() === "") return;
-
-    socket.emit("message", { username, room, message });
-    document.getElementById("msg").value = "";
-}
-
-document.getElementById("msg").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        sendMessage();
-    }
-});
-let typingTimeout;
-
-document.getElementById("msg").addEventListener("input", () => {
-    socket.emit("typing", { username, room });
-
-    clearTimeout(typingTimeout);
-    typingTimeout = setTimeout(() => {
-        document.getElementById("typing-status").innerText = "";
-    }, 1000);
-});
-socket.on("typing", (msg) => {
-    document.getElementById("typing-status").innerText = msg;
-
-    setTimeout(() => {
-        document.getElementById("typing-status").innerText = "";
-    }, 1000);
-});
-
