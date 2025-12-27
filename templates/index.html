@@ -2,10 +2,12 @@
 <html>
 <head>
     <title>Private Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
+<!-- Join Screen -->
 <div class="join-box">
     <h3>Join Private Chat</h3>
     <input id="username" placeholder="Your name">
@@ -13,14 +15,27 @@
     <button onclick="joinChat()">Join</button>
 </div>
 
+<!-- Chat Screen -->
 <div class="chat-box hidden">
+
+    <!-- Header (NEW) -->
+    <div class="chat-header">
+        <span>Private Chat</span>
+        <button id="toggleTheme">🌙</button>
+    </div>
+
+    <!-- Messages -->
     <div id="messages"></div>
+
+    <!-- Input Area -->
     <div class="input-area">
         <input id="msg" placeholder="Type message">
         <button onclick="sendMessage()">Send</button>
     </div>
+
 </div>
 
+<!-- Scripts -->
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="/static/script.js"></script>
 
