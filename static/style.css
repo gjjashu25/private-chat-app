@@ -175,4 +175,12 @@ body {
         font-size: 16px;
     }
 }
+/* Typing indicator */
+#typing-status {
+    font-size: 13px;
+    color: gray;
+    padding: 4px 12px;
+    height: 18px;
+}
+
 
