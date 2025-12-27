@@ -52,4 +52,11 @@ document.getElementById("msg").addEventListener("input", () => {
         document.getElementById("typing-status").innerText = "";
     }, 1000);
 });
+socket.on("typing", (msg) => {
+    document.getElementById("typing-status").innerText = msg;
+
+    setTimeout(() => {
+        document.getElementById("typing-status").innerText = "";
+    }, 1000);
+});
 
