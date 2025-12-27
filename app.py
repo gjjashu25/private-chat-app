@@ -28,6 +28,12 @@ def handle_join(data):
     send(f"{username} joined the chat.", to=room)
 
 @socketio.on('message')
+@socketio.on("typing")
+def handle_typing(data):
+    room = data["room"]
+    username = data["username"]
+    socketio.emit("typing", f"{username} is typing...", to=room)
+
 def handle_message(data):
     room = data['room']
     username = data['username']
